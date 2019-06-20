@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Firebase</title>
 </head>
 <body>
-    
+    <input type="email" id="email" placeholder="Coloca aqui tu email" />
+    <input type="password" id="pass" placeholder="Coloca aqui tu password" />
+    <button onclick="enviar()" >Enviar</button>
 
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
 
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#config-web-app -->
@@ -27,8 +30,20 @@
     appId: "1:296481844448:web:e1a463f1e90a161e"
   };
   // Initialize Firebase
-  var proy=firebase.initializeApp(firebaseConfig);
-  console.log(proy.name);
+  firebase.initializeApp(firebaseConfig);
+  function enviar(){
+    var email=document.getElementById('email').value;
+    var pass=document.getElementById('pass').value;
+    //alert("email="+email+" pass="+pass);
+
+    firebase.auth().createUserWithEmailAndPassword(email, pass)
+    .catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorMessage);
+    });
+
+  }
 </script>
 </body>
 </html>
