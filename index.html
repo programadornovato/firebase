@@ -48,9 +48,16 @@
     var photoURL = user.photoURL;
     var isAnonymous = user.isAnonymous;
     var uid = user.uid;
+    var textoVerificado="";
+    if(emailVerified===false){
+      textoVerificado="Email no verificado";
+    }
+    else{
+      textoVerificado="Email verificado";
+    }
     var providerData = user.providerData;
     document.getElementById('login').innerHTML=
-    `<p>Logueado `+user.email+`<p>
+    `<p>Logueado `+user.email+` `+ textoVerificado+` <p>
     <button onclick="cerrar()">Cerra sesion</button>
     `;
     console.log(user);
@@ -67,6 +74,17 @@
         var errorCode = error.code;
         var errorMessage = error.message;
         alert(errorMessage);
+    })
+    .then(function(){
+      verificar();
+    });
+  }
+  function verificar(){
+    var user = firebase.auth().currentUser;
+    user.sendEmailVerification().then(function() {
+    // Email sent.
+    }).catch(function(error) {
+    // An error happened.
     });
   }
   function acceso(){
