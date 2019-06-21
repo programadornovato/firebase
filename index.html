@@ -1,111 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Firebase</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css"
+    rel="stylesheet">
+  <title>Firebase</title>
 </head>
+
 <body>
-        <h1>Area de registro</h1>
-        <input type="email" id="email" placeholder="Coloca aqui tu email" />
-        <input type="password" id="pass" placeholder="Coloca aqui tu password" />
-        <button onclick="enviar()" >Enviar</button>
-        <h1>Area de acceso</h1>
-        <input type="email" id="emailA" placeholder="Coloca aqui tu email" />
-        <input type="password" id="passA" placeholder="Coloca aqui tu password" />
-        <button onclick="acceso()" >Acceso</button>
-        
-    <h1 id="login"></h1>
-
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
+  <div class="container">
+    <nav class="navbar navbar-light bg-light justify-content-between">
+      <a class="navbar-brand">Navbar</a>
+      <div class="form-inline">
+        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+          <input type="checkbox" checked data-toggle="toggle" data-on="Registrar" data-off="Loguearse" id="loginRestro" >
+        </div>
+        <div id="areaRegistro">
+          <input type="email" id="email" placeholder="Coloca aqui tu email" class="form-control mr-sm-2" />
+          <input type="password" id="pass" placeholder="Coloca aqui tu password" class="form-control mr-sm-2" />
+          <button onclick="enviar()" class="btn btn-outline-success my-2 my-sm-0">Registro</button>
+        </div>
+        <div id="areaLogin" style="display: none;">
+          <input type="email" id="emailA" placeholder="Coloca aqui tu email" class="form-control mr-sm-2" />
+          <input type="password" id="passA" placeholder="Coloca aqui tu password" class="form-control mr-sm-2" />
+          <button onclick="acceso()" class="btn btn-outline-success my-2 my-sm-0">Acceso</button>
+        </div>
+      </div>
+    </nav>
+    <div class="alert alert-primary" role="alert">
+        <span id="login"></span>
+    </div>
+    
+  </div>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#config-web-app -->
+  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/js/bootstrap4-toggle.min.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyBFgJ_abbrHfju-0uE70fIgeDb4zSuZI40",
+      authDomain: "usuarios-bf872.firebaseapp.com",
+      databaseURL: "https://usuarios-bf872.firebaseio.com",
+      projectId: "usuarios-bf872",
+      storageBucket: "",
+      messagingSenderId: "296481844448",
+      appId: "1:296481844448:web:e1a463f1e90a161e"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
 
-<script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyBFgJ_abbrHfju-0uE70fIgeDb4zSuZI40",
-    authDomain: "usuarios-bf872.firebaseapp.com",
-    databaseURL: "https://usuarios-bf872.firebaseio.com",
-    projectId: "usuarios-bf872",
-    storageBucket: "",
-    messagingSenderId: "296481844448",
-    appId: "1:296481844448:web:e1a463f1e90a161e"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
 
-
-  firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    var displayName = user.displayName;
-    var email = user.email;
-    var emailVerified = user.emailVerified;
-    var photoURL = user.photoURL;
-    var isAnonymous = user.isAnonymous;
-    var uid = user.uid;
-    var textoVerificado="";
-    if(emailVerified===false){
-      textoVerificado="Email no verificado";
-    }
-    else{
-      textoVerificado="Email verificado";
-    }
-    var providerData = user.providerData;
-    document.getElementById('login').innerHTML=
-    `<p>Logueado `+user.email+` `+ textoVerificado+` <p>
-    <button onclick="cerrar()">Cerra sesion</button>
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        var displayName = user.displayName;
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        var textoVerificado = "";
+        if (emailVerified === false) {
+          textoVerificado = "Email no verificado";
+        }
+        else {
+          textoVerificado = "Email verificado";
+        }
+        var providerData = user.providerData;
+        document.getElementById('login').innerHTML =
+          `<p>Logueado ` + user.email + ` ` + textoVerificado + ` <p>
+    <button  type="button" class="btn btn-danger" onclick="cerrar()">Cerra sesion</button>
     `;
-    console.log(user);
-  } else {
-    document.getElementById('login').innerHTML="No Logueado ";
-  }
-  });
+        console.log(user);
+      } else {
+        document.getElementById('login').innerHTML = "No Logueado ";
+      }
+    });
 
-  function enviar(){
-    var email=document.getElementById('email').value;
-    var pass=document.getElementById('pass').value;
-    firebase.auth().createUserWithEmailAndPassword(email, pass)
-    .catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        alert(errorMessage);
-    })
-    .then(function(){
-      verificar();
-    });
-  }
-  function verificar(){
-    var user = firebase.auth().currentUser;
-    user.sendEmailVerification().then(function() {
-    // Email sent.
-    }).catch(function(error) {
-    // An error happened.
-    });
-  }
-  function acceso(){
-        var emailA=document.getElementById('emailA').value;
-        var passA=document.getElementById('passA').value;
-        firebase.auth().signInWithEmailAndPassword(emailA, passA)
-        .catch(function(error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            alert(errorMessage);
+    function enviar() {
+      var email = document.getElementById('email').value;
+      var pass = document.getElementById('pass').value;
+      firebase.auth().createUserWithEmailAndPassword(email, pass)
+        .catch(function (error) {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          alert(errorMessage);
+        })
+        .then(function () {
+          verificar();
         });
-   }
-   function cerrar(){
-    firebase.auth().signOut()
-    .then(function(){
-      console.log('Salir');
-    })
-    .catch(function(error){
-      console.log(error);
-    })
-   }
-</script>
+    }
+    function verificar() {
+      var user = firebase.auth().currentUser;
+      user.sendEmailVerification().then(function () {
+        // Email sent.
+      }).catch(function (error) {
+        // An error happened.
+      });
+    }
+    function acceso() {
+      var emailA = document.getElementById('emailA').value;
+      var passA = document.getElementById('passA').value;
+      firebase.auth().signInWithEmailAndPassword(emailA, passA)
+        .catch(function (error) {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          alert(errorMessage);
+        });
+    }
+    function cerrar() {
+      firebase.auth().signOut()
+        .then(function () {
+          console.log('Salir');
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+    }
+    $(document).ready(function(){
+      $('#loginRestro').change(function(){
+        if($(this).is(':checked')){
+          $('#areaLogin').hide();
+          $('#areaRegistro').show();
+        }
+        else{
+          $('#areaLogin').show();
+          $('#areaRegistro').hide();
+        }
+      });
+    });
+  </script>
 </body>
+
 </html>
