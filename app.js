@@ -29,13 +29,29 @@ firebase.auth().onAuthStateChanged(function (user) {
             textoVerificado = "Email verificado";
         }
         var providerData = user.providerData;
+        /*
         document.getElementById('login').innerHTML =
             `<p>Logueado ` + user.email + ` ` + textoVerificado + ` <p>
         <button  type="button" class="btn btn-danger" onclick="cerrar()">Cerra sesion</button>
     `;
+        */
+        document.getElementById("btnAcceso").style.display = "none";
+        document.getElementById("checkLogin").style.display = "none";
+        document.getElementById("areaRegistro").style.display = "none";
+        document.getElementById("areaLogin").style.display = "";
+        document.getElementById("btnCerrar").style.display = "";
+        //document.getElementById('areaLogin').innerHTML = document.getElementById('areaLogin').innerHTML+ 
+        //'<button id="btnCerrar" type="button" class="btn btn-danger" onclick="cerrar()">Cerra sesion</button>';
+        document.getElementById('emailA').value=email;
+        document.getElementById('passA').style.display = "none";
         console.log(user);
     } else {
-        document.getElementById('login').innerHTML = "No Logueado ";
+        document.getElementById("btnAcceso").style.display = "";
+        document.getElementById("checkLogin").style.display = "";
+        document.getElementById("areaRegistro").style.display = "";
+        document.getElementById("areaLogin").style.display = "none";
+        document.getElementById('passA').style.display = "";
+        document.getElementById("btnCerrar").style.display = "none";
     }
 });
 

@@ -17,24 +17,22 @@
     <nav class="navbar navbar-light bg-light justify-content-between">
       <a class="navbar-brand">Navbar</a>
       <div class="form-inline">
-        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+        <div class="custom-control custom-checkbox my-1 mr-sm-2" id="checkLogin">
           <input type="checkbox" checked data-toggle="toggle" data-on="Registrar" data-off="Loguearse" id="loginRestro" >
         </div>
-        <div id="areaRegistro">
+        <div id="areaRegistro" style="display: none;">
           <input type="email" id="email" placeholder="Coloca aqui tu email" class="form-control mr-sm-2" />
           <input type="password" id="pass" placeholder="Coloca aqui tu password" class="form-control mr-sm-2" />
           <button onclick="enviar()" class="btn btn-outline-success my-2 my-sm-0">Registro</button>
         </div>
         <div id="areaLogin" style="display: none;">
-          <input type="email" id="emailA" placeholder="Coloca aqui tu email" class="form-control mr-sm-2" />
+          <input type="email" id="emailA" placeholder="Coloca aqui tu email" class="form-control mr-sm-2" value="eucm2g@gmail.com" />
           <input type="password" id="passA" placeholder="Coloca aqui tu password" class="form-control mr-sm-2" />
-          <button onclick="acceso()" class="btn btn-outline-success my-2 my-sm-0">Acceso</button>
+          <button onclick="acceso()" id="btnAcceso" class="btn btn-outline-success my-2 my-sm-0">Acceso</button>
+          <button id="btnCerrar" type="button" class="btn btn-danger" onclick="cerrar()"  style="display: none;">Cerra sesion</button>
         </div>
       </div>
     </nav>
-    <div class="alert alert-primary" role="alert">
-        <span id="login"></span>
-    </div>
     
   </div>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
