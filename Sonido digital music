@@ -1,0 +1,4 @@
+Bundle bundle = new Bundle();
+bundle.putDouble(FirebaseAnalytics.Param.VALUE, value);
+bundle.putString(FirebaseAnalytics.Param.VIRTUAL_CURRENCY_NAME, virtualCurrencyName);
+mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.EARN_VIRTUAL_CURRENCY, bundle);
